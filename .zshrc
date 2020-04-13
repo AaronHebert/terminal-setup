@@ -142,6 +142,8 @@ color-ssh() {
 compdef _ssh color-ssh=ssh
 alias ssh=color-ssh
 
+######## CUSTOM FUNCTIONS
+
 # function battlenet() {
 #   if [[ "$1" = "on" ]] then
 #     COMMAND="sudo ipfw del 1 deny tcp from any to any 1119"
@@ -155,6 +157,17 @@ alias ssh=color-ssh
 #     echo $fg[red] "Battle.net port 1119 disabled!"
 #   fi
 # }
+
+function reset_trap {
+  trap - INT
+}
+
+function bundle_v() {
+  BUNDLEVERSION=$(tail -n -1 Gemfile.lock | tr -d '[:space:]')
+  echo "---Running bundler with version ${BUNDLEVERSION} from Gemfile.lock---"
+  bundler _"${BUNDLEVERSION}"_ "$@"
+  echo "---Ran bundler with version ${BUNDLEVERSION}---"
+}
 
 # NVM
 export NVM_DIR="$HOME/.nvm"
